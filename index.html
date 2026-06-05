@@ -10,7 +10,7 @@
             --ipad-frame: #0d0d0d;
             --screen-bg: #eceff1;
             
-            /* マニュアルに合わせた正確なカラーコード */
+            /* 正確なカラーコード */
             --primary-green: #14a76c;
             --primary-green-hover: #108957;
             --disabled-red: #d9a5a5;
@@ -21,6 +21,9 @@
             
             --text-main: #2c3e50;
             --shadow-soft: 0 8px 16px rgba(0,0,0,0.15);
+            
+            /* 新しいブランドカラー */
+            --cuebus-gold: #cfa838;
         }
 
         body {
@@ -124,32 +127,67 @@
             font-size: 32px;
             box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
-        .icon-store { background: linear-gradient(#54c7fc, #135694); color: #fff; font-size: 24px; font-weight: bold; border: 1px solid rgba(255,255,255,0.2);}
+        .icon-store { background: linear-gradient(#54c7fc, #135694); color: #fff; font-size: 24px; font-weight: bold; border: 1px solid rgba(255,255,255,0.2); }
         .icon-book { background: #ff9500; }
         .icon-maps { background: #fff; font-size: 26px; }
         .icon-chrome { background: #fff; font-size: 26px; }
         .icon-setting { background: linear-gradient(#b0bec5, #78909c); font-size: 40px; color: #37474f; }
         .icon-hint { background: #ffcc00; }
 
+        /* スクショを完全に再現したCUEBUS新アプリアイコン */
         .app-icon-cuebus {
             width: 76px;
             height: 76px;
             background-color: #000000;
-            color: #f39c12;
-            font-size: 15px;
-            font-weight: 900;
-            line-height: 1.1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             border-radius: 18px;
             cursor: pointer;
-            border: 2px solid rgba(255, 255, 255, 0.45); 
-            box-shadow: 0 8px 16px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.1);
             transition: transform 0.1s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .app-icon-cuebus:active { transform: scale(0.92); }
+
+        /* 左上の金三角 */
+        .app-icon-cuebus::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 5px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 24px 13px 0 0;
+            border-color: var(--cuebus-gold) transparent transparent transparent;
+        }
+        /* 右下の金三角 */
+        .app-icon-cuebus::after {
+            content: "";
+            position: absolute;
+            bottom: 14px;
+            right: 5px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 24px 13px;
+            border-color: transparent transparent var(--cuebus-gold) transparent;
+        }
+        /* 中央のテキスト体 */
+        .cuebus-logo-text {
+            color: var(--cuebus-gold);
+            font-family: "Arial Black", Gadget, sans-serif;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 0.95;
+            text-align: center;
+            letter-spacing: -0.5px;
+            z-index: 2;
+            margin-left: 2px;
+        }
 
         .home-dock {
             background: rgba(255, 255, 255, 0.25);
@@ -187,17 +225,44 @@
             z-index: 10;
         }
 
+        /* アプリ内ヘッダー用のコンパクト新ロゴデザイン */
         .logo-box {
             background-color: #000000;
-            color: #f39c12;
-            font-size: 11px;
-            font-weight: 900;
-            line-height: 1.1;
-            padding: 6px 10px;
-            border-radius: 4px;
+            width: 52px;
+            height: 44px;
+            border-radius: 6px;
             cursor: pointer;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-box::before {
+            content: "";
+            position: absolute;
+            top: 7px;
+            left: 3px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 15px 8px 0 0;
+            border-color: var(--cuebus-gold) transparent transparent transparent;
+        }
+        .logo-box::after {
+            content: "";
+            position: absolute;
+            bottom: 7px;
+            right: 3px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 15px 8px;
+            border-color: transparent transparent var(--cuebus-gold) transparent;
+        }
+        .logo-box .cuebus-logo-text {
+            font-size: 10.5px;
+            margin-left: 1px;
         }
 
         .btn-header-quit {
@@ -260,7 +325,7 @@
             justify-content: center;
             align-items: center;
             height: 100%;
-            gap: 40px;
+            gap: 25px;
         }
 
         .main-menu-grid {
@@ -270,10 +335,54 @@
             width: 100%;
         }
 
-        .btn-in { background-color: var(--primary-green); width: 400px; height: 280px; }
+        .btn-in { background-color: var(--primary-green); width: 400px; height: 260px; }
         .btn-in:disabled { opacity: 0.8; background-color: var(--primary-green); cursor: not-allowed; }
-        .btn-out-disabled { background-color: var(--disabled-red); width: 400px; height: 280px; }
-        .btn-out-active { background-color: var(--active-red); width: 400px; height: 280px; }
+        .btn-out-disabled { background-color: var(--disabled-red); width: 400px; height: 260px; }
+        .btn-out-active { background-color: var(--active-red); width: 400px; height: 260px; }
+
+        .oricon-storage-panel {
+            width: 845px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 16px 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .oricon-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #37474f;
+        }
+        .oricon-count-text {
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .oricon-count-text span {
+            font-size: 32px;
+            font-weight: 900;
+            color: #135694;
+        }
+        .oricon-progress-bg {
+            width: 100%;
+            height: 24px;
+            background-color: #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        .oricon-progress-bar {
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, #29b6f6, #135694);
+            border-radius: 12px;
+            transition: width 0.4s ease;
+        }
 
         .btn-admin-panel {
             background: #ffffff;
@@ -291,7 +400,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 75%;
             gap: 50px;
         }
         .btn-type-sale { background-color: var(--btn-orange); color: #000000; width: 400px; height: 280px; text-shadow: none; font-size: 64px;}
@@ -302,7 +411,7 @@
             border-radius: 16px;
             padding: 20px 24px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.044);
         }
 
         .section-title {
@@ -345,7 +454,7 @@
             margin-top: 10px;
         }
 
-        .btn-nav-cancel {
+        .btn-nav-back {
             background-color: var(--btn-gray);
             color: white;
             font-size: 22px;
@@ -391,26 +500,30 @@
         .work-split-container {
             display: flex;
             justify-content: space-between;
-            height: 72%;
+            height: 75%;
         }
 
         .meta-info-panel {
             width: 50%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
 
-        .card-preview {
-            font-size: 36px;
-            font-weight: bold;
-            padding: 24px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: var(--shadow-soft);
+        .sub-buttons-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
         }
-        .card-preview.date { background-color: #fffde7; border: 2px solid #fbc02d; color: #333; }
-        .card-preview.dept { background-color: var(--btn-orange); color: #ffffff; }
+
+        /* 赤丸の要望通りシンプルなテキスト表示に変更 */
+        .card-preview {
+            font-size: 44px;
+            font-weight: bold;
+            padding: 5px 10px;
+            text-align: left;
+            color: #000000;
+        }
 
         .instruction-notice {
             color: #d32f2f;
@@ -422,17 +535,41 @@
             border-left: 5px solid #d32f2f;
         }
 
-        .btn-submit-action {
+        .btn-submit-action-next {
             background-color: var(--primary-green);
             color: white;
             font-size: 36px;
             font-weight: bold;
-            padding: 20px;
+            padding: 22px;
             border: none;
             border-radius: 20px;
             cursor: pointer;
             box-shadow: 0 6px 0 var(--primary-green-hover), 0 10px 15px rgba(0,0,0,0.15);
-            margin-top: auto;
+            width: 100%;
+        }
+        .btn-submit-action-quit {
+            background-color: var(--active-red);
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #8c1218, 0 8px 12px rgba(0,0,0,0.15);
+            flex: 1;
+        }
+        .btn-submit-action-back {
+            background-color: var(--btn-gray);
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            padding: 14px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #546e7a, 0 8px 12px rgba(0,0,0,0.15);
+            flex: 1;
         }
 
         .shelf-graphic {
@@ -452,6 +589,7 @@
             font-weight: bold;
             color: #90a4ae;
             border-radius: 10px;
+            transition: all 0.2s ease;
         }
 
         .shelf-row.target-highlight {
@@ -461,17 +599,6 @@
             font-size: 26px;
             box-shadow: 0 0 15px rgba(243, 169, 59, 0.4);
         }
-
-        .flow-end-layout {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            gap: 30px;
-        }
-        .btn-flow-next { background-color: var(--primary-green); width: 550px; font-size: 36px; padding: 30px; }
-        .btn-flow-pause { background-color: var(--active-red); width: 550px; font-size: 36px; padding: 30px; }
 
         .modal-blur-overlay {
             display: none;
@@ -529,6 +656,63 @@
             text-align: center;
             box-shadow: 0 5px 0 #b77f28, 0 8px 10px rgba(0,0,0,0.15);
         }
+
+        /* 新設：確認用カスタムポップアップ用のスタイル */
+        .confirm-alert-card {
+            width: 600px;
+            background-color: #ffffff;
+            border: 4px solid var(--btn-orange);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .confirm-header-title {
+            color: var(--text-main);
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        .confirm-body-box {
+            background-color: #f5f7f8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #000000;
+            line-height: 1.6;
+        }
+        .confirm-buttons-zone {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .btn-confirm-yes {
+            flex: 1;
+            background-color: var(--primary-green);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--primary-green-hover);
+        }
+        .btn-confirm-no {
+            flex: 1;
+            background-color: var(--btn-gray);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #546e7a;
+        }
     </style>
 </head>
 <body>
@@ -569,7 +753,9 @@
                 </div>
                 
                 <div class="app-item">
-                    <div class="app-icon-cuebus" onclick="launchCuebusApp()">CUE<br>BUS</div>
+                    <div class="app-icon-cuebus" onclick="launchCuebusApp()">
+                        <div class="cuebus-logo-text">CUE<br>BUS</div>
+                    </div>
                     <span style="font-weight: bold;">CUEBUS</span>
                 </div>
             </div>
@@ -585,7 +771,9 @@
         </div>
 
         <div class="app-header">
-            <div class="logo-box" onclick="resetToHome()">CUE<br>BUS</div>
+            <div class="logo-box" onclick="resetToHome()">
+                <div class="cuebus-logo-text">CUE<br>BUS</div>
+            </div>
             <button class="btn-header-quit" onclick="returnToIpadHome()">終了</button>
         </div>
 
@@ -608,12 +796,38 @@
                 </div>
             </div>
 
+            <div class="modal-blur-overlay" id="confirmLayer">
+                <div class="confirm-alert-card">
+                    <div class="confirm-header-title">以下の内容でよろしいですか？</div>
+                    <div class="confirm-body-box">
+                        種別：<span id="confirmTypeText">-</span><br>
+                        <span id="confirmDateRow">日付：<span id="confirmDateText">-</span><br></span>
+                        部門：<span id="confirmDeptText">-</span>
+                    </div>
+                    <div class="confirm-buttons-zone">
+                        <button class="btn-confirm-no" onclick="handleConfirmNo()">いいえ</button>
+                        <button class="btn-confirm-yes" onclick="handleConfirmYes()">はい</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="page active" id="viewMainMenu">
                 <div class="home-layout">
                     <div class="main-menu-grid">
                         <button class="btn-ui btn-in" id="mainInButton" onclick="navigate('viewInTypeSelect')">入れる</button>
-                        <button class="btn-ui btn-out-disabled" id="mainOutButton" onclick="navigate('viewOutSelect')">取る</button>
+                        <button class="btn-ui btn-out-disabled" id="mainOutButton" onclick="openOutTypeSelectPage()">取る</button>
                     </div>
+                    
+                    <div class="oricon-storage-panel">
+                        <div class="oricon-labels">
+                            <div>📦 CUEBUS内コンテナ残量（最大55箱）</div>
+                            <div class="oricon-count-text"><span id="oriconCurrentNum">33</span> / 55 箱 (<span id="oriconPercent">60</span>%)</div>
+                        </div>
+                        <div class="oricon-progress-bg">
+                            <div class="oricon-progress-bar" id="oriconBar"></div>
+                        </div>
+                    </div>
+
                     <div>
                         <button class="btn-admin-panel">【管理】</button>
                     </div>
@@ -625,20 +839,15 @@
                     <button class="btn-ui btn-type-sale" onclick="handleInType('売出品')">売出品</button>
                     <button class="btn-ui btn-type-stock" onclick="handleInType('ストック品')">ストック品</button>
                 </div>
+                <div class="footer-control" style="margin-top: -30px;">
+                    <button class="btn-nav-back" onclick="navigate('viewMainMenu')">戻る</button>
+                </div>
             </div>
 
             <div class="page" id="viewInParamSelect">
                 <div class="select-section" id="inDateWrapper">
                     <div class="section-title">売出日を選んでください</div>
                     <div class="choice-grid" id="inDateGrid">
-                        <button class="btn-choice selected" onclick="selectInDate(this, '6/18(水)')">6/18(水)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/19(木)')">6/19(木)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/20(金)')">6/20(金)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/21(土)')">6/21(土)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/22(日)')">6/22(日)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/23(月)')">6/23(月)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/24(火)')">6/24(火)</button>
-                        <button class="btn-choice" onclick="selectInDate(this, '6/25(水)')">6/25(水)</button>
                     </div>
                 </div>
                 
@@ -646,45 +855,61 @@
                     <div class="section-title">部門を選んでください</div>
                     <div class="choice-grid">
                         <button class="btn-choice" onclick="selectInDept(this, '婦人服')">婦人服</button>
-                        <button class="btn-choice selected" onclick="selectInDept(this, '紳士・子供服')">紳士・子供服</button>
+                        <button class="btn-choice" onclick="selectInDept(this, '紳士・子供服')">紳士・子供服</button>
                         <button class="btn-choice" onclick="selectInDept(this, '実用')">実用</button>
                         <button class="btn-choice" onclick="selectInDept(this, 'リビング')">リビング</button>
                     </div>
                 </div>
 
                 <div class="footer-control">
-                    <button class="btn-nav-cancel" onclick="navigate('viewInTypeSelect')">取り消し</button>
+                    <button class="btn-nav-back" onclick="navigate('viewInTypeSelect')">戻る</button>
                     <button class="btn-nav-nextweek" id="btnNextWeek" onclick="toggleNextWeek()">次週</button>
                 </div>
             </div>
 
             <div class="page" id="viewInExecution">
-                <div class="work-banner">【3段目】に入れてください</div>
+                <div class="work-banner" id="bannerInText">【3段目】に入れてください</div>
                 <div class="work-split-container">
                     <div class="meta-info-panel">
-                        <div class="card-preview date" id="panelInDate">6/18(水)</div>
-                        <div class="card-preview dept" id="panelInDept">紳士・子供服</div>
-                        <div class="instruction-notice">重要: レシートを一番上において下さい。</div>
-                        <button class="btn-submit-action" onclick="resetToHome()">完了</button>
+                        <div class="card-preview" id="panelInDate">6/18(水)</div>
+                        <div class="card-preview" id="panelInDept">紳士・子供服</div>
+                        <div class="instruction-notice" style="margin-top: 10px;">重要: レシートを一番上において下さい。</div>
+                        
+                        <button class="btn-submit-action-next" onclick="completeInAndContinue()">続けて入れる</button>
+                        
+                        <div class="sub-buttons-row">
+                            <button class="btn-submit-action-back" onclick="navigate('viewInParamSelect')">戻る</button>
+                            <button class="btn-submit-action-quit" onclick="completeInAndQuit()">作業終了</button>
+                        </div>
                     </div>
-                    <div class="shelf-graphic">
-                        <div class="shelf-row">5段目</div>
-                        <div class="shelf-row">4段目</div>
-                        <div class="shelf-row target-highlight">★ 3段目</div>
-                        <div class="shelf-row">2段目</div>
-                        <div class="shelf-row">1段目</div>
+                    <div class="shelf-graphic" id="shelfInGraphic">
+                        <div class="shelf-row" id="shelfIn-5">5段目</div>
+                        <div class="shelf-row" id="shelfIn-4">4段目</div>
+                        <div class="shelf-row" id="shelfIn-3">★ 3段目</div>
+                        <div class="shelf-row" id="shelfIn-2">2段目</div>
+                        <div class="shelf-row" id="shelfIn-1">1段目</div>
                     </div>
                 </div>
             </div>
 
+            <div class="page" id="viewOutTypeSelect">
+                <div class="type-select-grid">
+                    <button class="btn-ui btn-type-sale" onclick="handleOutType('売出品')">売出品</button>
+                    <button class="btn-ui btn-type-stock" onclick="handleOutType('ストック品')">ストック品</button>
+                </div>
+                <div class="footer-control" style="margin-top: -30px;">
+                    <button class="btn-nav-back" onclick="navigate('viewMainMenu')">戻る</button>
+                </div>
+            </div>
+
             <div class="page" id="viewOutSelect">
-                <div class="select-section">
+                <div class="select-section" id="outDateWrapper">
                     <div class="section-title">売出日を選んでください</div>
-                    <div class="choice-grid">
+                    <div class="choice-grid" id="outDateGrid">
                         <button class="btn-choice" onclick="selectOutDate(this, '6/19(木)')">6/19(木)</button>
                         <button class="btn-choice" onclick="selectOutDate(this, '6/21(土)')">6/21(土)</button>
                         <button class="btn-choice" onclick="selectOutDate(this, '6/22(日)')">6/22(日)</button>
-                        <button class="btn-choice selected" onclick="selectOutDate(this, '6/23(月)')">6/23(月)</button>
+                        <button class="btn-choice" onclick="selectOutDate(this, '6/23(月)')">6/23(月)</button>
                         <button class="btn-choice" onclick="selectOutDate(this, '6/24(火)')">6/24(火)</button>
                         <button class="btn-choice" onclick="selectOutDate(this, '6/25(水)')">6/25(水)</button>
                     </div>
@@ -692,43 +917,39 @@
 
                 <div class="select-section">
                     <div class="section-title">部門を選んでください</div>
-                    <div class="choice-grid">
-                        <button class="btn-choice" onclick="selectOutDept(this, '婦人服')">婦人服</button>
-                        <button class="btn-choice selected" onclick="selectOutDept(this, '実用')">実用</button>
-                        <button class="btn-choice" onclick="selectOutDept(this, 'リビング')">リビング</button>
+                    <div class="choice-grid" id="outDeptGrid">
                     </div>
                 </div>
                 
                 <div class="footer-control">
-                    <button class="btn-nav-cancel" onclick="resetToHome()">取り消し</button>
+                    <button class="btn-nav-back" onclick="navigate('viewOutTypeSelect')">戻る</button>
                 </div>
             </div>
 
             <div class="page" id="viewOutExecution">
-                <div class="work-banner">【3段目】から取り出してください</div>
+                <div class="work-banner" id="bannerOutText">【3段目】から取り出してください</div>
                 <div class="work-split-container">
                     <div class="meta-info-panel">
-                        <div class="card-preview date" id="panelOutDate">6/23(月)</div>
-                        <div class="card-preview dept" id="panelOutDept">実用</div>
-                        <div style="font-size:18px; color:#546e7a; line-height:1.5; font-weight: bold;">
-                            指定された段から「服」と「紙のレシート」を取り出し、手元のテーパー箱へ移し終わりましたら完了ボタンを押してください。
+                        <div class="card-preview" id="panelOutDate">6/23(月)</div>
+                        <div class="card-preview" id="panelOutDept">実用</div>
+                        <div style="font-size:18px; color:#546e7a; line-height:1.5; font-weight: bold; margin-bottom: 5px; padding-left: 10px;">
+                            指定された段から「服」と「紙のレシート」を取り出し、手元のテーパー箱へ移してください。
                         </div>
-                        <button class="btn-submit-action" onclick="navigate('viewOutNextStep')">完了</button>
+                        
+                        <button class="btn-submit-action-next" onclick="completeOutAndContinue()">続けて取り出す</button>
+                        
+                        <div class="sub-buttons-row">
+                            <button class="btn-submit-action-back" onclick="navigate('viewOutSelect')">戻る</button>
+                            <button class="btn-submit-action-quit" onclick="completeOutAndQuit()">作業終了</button>
+                        </div>
                     </div>
-                    <div class="shelf-graphic">
-                        <div class="shelf-row">5段目</div>
-                        <div class="shelf-row">4段目</div>
-                        <div class="shelf-row target-highlight">★ 3段目</div>
-                        <div class="shelf-row">2段目</div>
-                        <div class="shelf-row">1段目</div>
+                    <div class="shelf-graphic" id="shelfOutGraphic">
+                        <div class="shelf-row" id="shelfOut-5">5段目</div>
+                        <div class="shelf-row" id="shelfOut-4">4段目</div>
+                        <div class="shelf-row" id="shelfOut-3">★ 3段目</div>
+                        <div class="shelf-row" id="shelfOut-2">2段目</div>
+                        <div class="shelf-row" id="shelfOut-1">1段目</div>
                     </div>
-                </div>
-            </div>
-
-            <div class="page" id="viewOutNextStep">
-                <div class="flow-end-layout">
-                    <button class="btn-ui btn-flow-next" onclick="resetToHome()">【次の箱を出す】</button>
-                    <button class="btn-ui btn-flow-pause" onclick="resetToHome()">【作業を中断】</button>
                 </div>
             </div>
 
@@ -740,11 +961,16 @@
     let appLaunched = false;
     let alertCleared = false;
     let flowInType = '';
-    let dataInDate = '6/18(水)';
-    let dataInDept = '紳士・子供服';
-    let dataOutDate = '6/23(月)';
-    let dataOutDept = '実用';
+    let flowOutType = ''; 
+    let dataInDate = ''; // 決定前は空にするため初期値をクリア
+    let dataInDept = '';
+    let dataOutDate = ''; 
+    let dataOutDept = '';
     let isNextWeekActive = false;
+    let currentFlow = ''; // 現在のフローを追跡 ('In' または 'Out')
+
+    let currentOriconCount = 33;
+    const maxOriconCount = 55;
 
     const currentWeekDates = ['6/18(水)', '6/19(木)', '6/20(金)', '6/21(土)', '6/22(日)', '6/23(月)', '6/24(火)', '6/25(水)'];
     const nextWeekDates    = ['6/26(金)', '6/27(土)', '6/28(日)', '6/29(月)', '6/30(火)', '7/1(水)', '7/2(木)', '7/3(金)'];
@@ -752,6 +978,7 @@
     window.onload = function() {
         setInterval(refreshClock, 1000);
         refreshClock();
+        updateOriconDisplay();
     };
 
     function refreshClock() {
@@ -759,6 +986,46 @@
         let h = d.getHours();
         const m = String(d.getMinutes()).padStart(2, '0');
         document.getElementById('homeLiveClock').innerText = `${String(h).padStart(2, '0')}:${m}`;
+    }
+
+    function updateOriconDisplay() {
+        if (currentOriconCount > maxOriconCount) currentOriconCount = maxOriconCount;
+        if (currentOriconCount < 0) currentOriconCount = 0;
+
+        const percent = Math.round((currentOriconCount / maxOriconCount) * 100);
+        
+        document.getElementById('oriconCurrentNum').innerText = currentOriconCount;
+        document.getElementById('oriconPercent').innerText = percent;
+        document.getElementById('oriconBar').style.width = percent + '%';
+    }
+
+    function completeInAndContinue() {
+        currentOriconCount += 1;
+        updateOriconDisplay();
+        clearInSelections(); // 選択を初期化して戻す
+        navigate('viewInParamSelect');
+    }
+
+    function completeInAndQuit() {
+        currentOriconCount += 1;
+        updateOriconDisplay();
+        resetToHome();
+    }
+
+    function completeOutAndContinue() {
+        currentOriconCount -= 1; 
+        updateOriconDisplay();
+        if (flowOutType === 'ストック品') {
+            openOutSelectPage('ストック品');
+        } else {
+            openOutSelectPage('売出品');
+        }
+    }
+
+    function completeOutAndQuit() {
+        currentOriconCount -= 1; 
+        updateOriconDisplay();
+        resetToHome(); 
     }
 
     function launchCuebusApp() {
@@ -797,25 +1064,32 @@
     }
 
     function resetToHome() {
+        clearInSelections();
+        clearOutSelections();
         navigate('viewMainMenu');
     }
 
-    // ★ 修正部分：ストック品か売出品かで「次週」ボタンの表示状態も制御
+    /* ＝ ＝ ＝ ＝ ＝ 「入れる」フロー ＝ ＝ ＝ ＝ ＝ */
     function handleInType(type) {
         flowInType = type;
+        currentFlow = 'In';
         const dateWrapper = document.getElementById('inDateWrapper');
         const nextWeekBtn = document.getElementById('btnNextWeek');
         
+        // ページをまたぐ際に前回の部門選択ハイライトをクリア
+        const deptButtons = document.querySelectorAll('#viewInParamSelect .btn-choice');
+        deptButtons.forEach(btn => btn.classList.remove('selected'));
+
         if (type === 'ストック品') {
-            dateWrapper.style.display = 'none';   // 日付エリアを非表示
-            nextWeekBtn.style.display = 'none';   // 【ご要望】次週ボタンを非表示にする [cite: 32]
+            if (dateWrapper) dateWrapper.style.display = 'none';   
+            if (nextWeekBtn) nextWeekBtn.style.display = 'none';   
             dataInDate = 'ストック品';
         } else {
-            dateWrapper.style.display = 'block';  // 日付エリアを表示 [cite: 32]
-            nextWeekBtn.style.display = 'block';  // 次週ボタンを表示
+            if (dateWrapper) dateWrapper.style.display = 'block';  
+            if (nextWeekBtn) nextWeekBtn.style.display = 'block';  
             isNextWeekActive = false;
-            document.getElementById('btnNextWeek').classList.remove('active-state');
-            renderInDates(currentWeekDates, 0);
+            if (nextWeekBtn) nextWeekBtn.classList.remove('active-state');
+            renderInDates(currentWeekDates, 0); // 初期選択は1番目
         }
         navigate('viewInParamSelect');
     }
@@ -835,6 +1109,7 @@
 
     function renderInDates(dateArray, defaultSelectedIndex) {
         const grid = document.getElementById('inDateGrid');
+        if (!grid) return;
         grid.innerHTML = '';
 
         dateArray.forEach((dateStr, index) => {
@@ -863,15 +1138,108 @@
         element.classList.add('selected');
         dataInDept = val;
         
-        document.getElementById('panelInDate').innerText = dataInDate;
-        document.getElementById('panelInDept').innerText = dataInDept;
-        navigate('viewInExecution');
+        // 即遷移せず、ポップアップを表示
+        showConfirmModal();
+    }
+
+    function clearInSelections() {
+        dataInDept = '';
+        const deptButtons = document.querySelectorAll('#viewInParamSelect .select-section:nth-child(2) .btn-choice');
+        deptButtons.forEach(btn => btn.classList.remove('selected'));
+        if (flowInType === '売出品') {
+            renderInDates(isNextWeekActive ? nextWeekDates : currentWeekDates, 0);
+        }
+    }
+
+
+    /* ＝ ＝ ＝ ＝ ＝ 「取る」フロー ＝ ＝ ＝ ＝ ＝ */
+    function openOutTypeSelectPage() {
+        navigate('viewOutTypeSelect');
+    }
+
+    function handleOutType(type) {
+        flowOutType = type;
+        currentFlow = 'Out';
+        openOutSelectPage(type);
+    }
+
+    function openOutSelectPage(type) {
+        const dateWrapper = document.getElementById('outDateWrapper');
+        
+        if (type === 'ストック品') {
+            if (dateWrapper) dateWrapper.style.display = 'none'; 
+            dataOutDate = 'ストック品';
+            updateOutDepartments('ストック品'); 
+        } else {
+            if (dateWrapper) dateWrapper.style.display = 'block'; 
+            dataOutDate = '6/21(土)'; 
+            
+            const dateButtons = document.querySelectorAll('#outDateGrid .btn-choice');
+            dateButtons.forEach(btn => {
+                if (btn.innerText === dataOutDate) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            updateOutDepartments(dataOutDate);
+        }
+        navigate('viewOutSelect');
     }
 
     function selectOutDate(element, val) {
         clearSelectedInGroup(element);
         element.classList.add('selected');
         dataOutDate = val;
+
+        updateOutDepartments(val);
+    }
+
+    function updateOutDepartments(dateStr) {
+        const deptGrid = document.getElementById('outDeptGrid');
+        if (!deptGrid) return;
+        deptGrid.innerHTML = '';
+
+        let departments = [];
+        let defaultSelectDept = ''; // ユーザー指定により自動選択（ハイライト）を解除
+
+        if (dateStr === 'ストック品') {
+            departments = ['婦人服', '紳士・子供服', '実用', 'リビング'];
+        } else {
+            switch(dateStr) {
+                case '6/19(木)':
+                    departments = ['紳士・子供服', '実用'];
+                    break;
+                case '6/21(土)':
+                    departments = ['婦人服'];
+                    break;
+                case '6/22(日)': 
+                    departments = ['実用', 'リビング'];
+                    break;
+                case '6/23(月)':
+                    departments = ['婦人服', '紳士・子供服', '実用', 'リビング'];
+                    break;
+                case '6/24(火)':
+                    departments = ['紳士・子供服', 'リビング'];
+                    break;
+                case '6/25(水)':
+                    departments = ['婦人服', 'リビング'];
+                    break;
+                default:
+                    departments = ['婦人服', '実用'];
+            }
+        }
+
+        departments.forEach((deptStr) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-choice';
+            btn.innerText = deptStr;
+
+            btn.onclick = function() {
+                selectOutDept(this, deptStr);
+            };
+            deptGrid.appendChild(btn);
+        });
     }
 
     function selectOutDept(element, val) {
@@ -879,9 +1247,102 @@
         element.classList.add('selected');
         dataOutDept = val;
 
-        document.getElementById('panelOutDate').innerText = dataOutDate;
-        document.getElementById('panelOutDept').innerText = dataOutDept;
-        navigate('viewOutExecution');
+        // 即遷移せず、ポップアップを表示
+        showConfirmModal();
+    }
+
+    function clearOutSelections() {
+        dataOutDept = '';
+        const deptButtons = document.querySelectorAll('#outDeptGrid .btn-choice');
+        deptButtons.forEach(btn => btn.classList.remove('selected'));
+    }
+
+
+    /* ＝ ＝ ＝ ＝ ＝ 確認ポップアップ制御機能 ＝ ＝ ＝ ＝ ＝ */
+    function showConfirmModal() {
+        const isIn = (currentFlow === 'In');
+        const typeText = isIn ? flowInType : flowOutType;
+        const dateText = isIn ? dataInDate : dataOutDate;
+        const deptText = isIn ? dataInDept : dataOutDept;
+
+        document.getElementById('confirmTypeText').innerText = typeText;
+        document.getElementById('confirmDateText').innerText = dateText;
+        document.getElementById('confirmDeptText').innerText = deptText;
+
+        // 【修正箇所】「ストック品」が選択された場合、日付行全体を隠す
+        const dateRow = document.getElementById('confirmDateRow');
+        if (typeText === 'ストック品') {
+            dateRow.style.display = 'none';
+        } else {
+            dateRow.style.display = 'inline';
+        }
+
+        document.getElementById('confirmLayer').style.display = 'flex';
+    }
+
+    function handleConfirmYes() {
+        // ポップアップを閉じる
+        document.getElementById('confirmLayer').style.display = 'none';
+
+        if (currentFlow === 'In') {
+            // 入庫実行画面の書き換えと遷移
+            document.getElementById('panelInDate').innerText = dataInDate;
+            document.getElementById('panelInDept').innerText = dataInDept;
+            applyDynamicShelf('In', dataInDate, dataInDept);
+            navigate('viewInExecution');
+        } else {
+            // 出庫実行画面の書き換えと遷移
+            document.getElementById('panelOutDate').innerText = dataOutDate;
+            document.getElementById('panelOutDept').innerText = dataOutDept;
+            applyDynamicShelf('Out', dataOutDate, dataOutDept);
+            navigate('viewOutExecution');
+        }
+    }
+
+    function handleConfirmNo() {
+        // ポップアップを閉じる
+        document.getElementById('confirmLayer').style.display = 'none';
+
+        // 選択状態を完全にリセット
+        if (currentFlow === 'In') {
+            clearInSelections();
+        } else {
+            clearOutSelections();
+        }
+    }
+
+
+    /* ＝ ＝ ＝ ＝ ＝ 棚グラフィック＆共通処理 ＝ ＝ ＝ ＝ ＝ */
+    function applyDynamicShelf(flowType, dateStr, deptStr) {
+        const combinedString = dateStr + deptStr;
+        let sum = 0;
+        for (let i = 0; i < combinedString.length; i++) {
+            sum += combinedString.charCodeAt(i);
+        }
+        let targetShelfNum = (sum % 5) + 1;
+
+        if(dateStr === '6/22(日)' && deptStr === 'リビング') {
+            targetShelfNum = 4;
+        }
+
+        if (flowType === 'In') {
+            document.getElementById('bannerInText').innerText = `【${targetShelfNum}段目】に入れてください`;
+        } else {
+            document.getElementById('bannerOutText').innerText = `【${targetShelfNum}段目】から取り出してください`;
+        }
+
+        for (let i = 1; i <= 5; i++) {
+            const rowEl = document.getElementById(`shelf${flowType}-${i}`);
+            if (rowEl) {
+                rowEl.classList.remove('target-highlight');
+                if (i === targetShelfNum) {
+                    rowEl.classList.add('target-highlight');
+                    rowEl.innerText = `★ ${i}段目`;
+                } else {
+                    rowEl.innerText = `${i}段目`;
+                }
+            }
+        }
     }
 
     function clearSelectedInGroup(el) {
