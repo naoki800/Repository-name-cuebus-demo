@@ -17,6 +17,7 @@
             --active-red: #b81d24;
             --btn-orange: #f3a93b;
             --btn-cyan: #00e5ff;
+            --btn-lime: #4ade80; /* 新設：EC品用カラー */
             --btn-gray: #78909c;
             
             --text-main: #2c3e50;
@@ -24,6 +25,10 @@
             
             /* 新しいブランドカラー */
             --cuebus-gold: #cfa838;
+
+            /* UI改善用の追加カラー */
+            --column-yellow-bg: #f1c40f;
+            --column-green-bg: #2ecc71;
         }
 
         body {
@@ -285,24 +290,26 @@
             flex: 1;
             position: relative;
             box-sizing: border-box;
+            overflow-y: auto;
         }
 
         .page {
             display: none;
             width: 100%;
             height: 100%;
-            padding: 40px 50px;
+            padding: 30px 40px;
             box-sizing: border-box;
         }
 
         .page.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
         }
 
         .btn-ui {
             border: none;
             border-radius: 24px;
-            font-size: 56px;
+            font-size: 52px;
             font-weight: bold;
             color: #ffffff;
             cursor: pointer;
@@ -335,10 +342,10 @@
             width: 100%;
         }
 
-        .btn-in { background-color: var(--primary-green); width: 400px; height: 260px; }
+        .btn-in { background-color: var(--primary-green); width: 400px; height: 260px; font-size: 56px; }
         .btn-in:disabled { opacity: 0.8; background-color: var(--primary-green); cursor: not-allowed; }
-        .btn-out-disabled { background-color: var(--disabled-red); width: 400px; height: 260px; }
-        .btn-out-active { background-color: var(--active-red); width: 400px; height: 260px; }
+        .btn-out-disabled { background-color: var(--disabled-red); width: 400px; height: 260px; font-size: 56px; }
+        .btn-out-active { background-color: var(--active-red); width: 400px; height: 260px; font-size: 56px; }
 
         .oricon-storage-panel {
             width: 845px;
@@ -401,10 +408,12 @@
             justify-content: center;
             align-items: center;
             height: 75%;
-            gap: 50px;
+            gap: 30px;
+            width: 100%;
         }
-        .btn-type-sale { background-color: var(--btn-orange); color: #000000; width: 400px; height: 280px; text-shadow: none; font-size: 64px;}
-        .btn-type-stock { background-color: var(--btn-cyan); color: #000000; width: 400px; height: 280px; text-shadow: none; font-size: 64px;}
+        .btn-type-sale { background-color: var(--btn-orange); color: #000000; width: 270px; height: 280px; text-shadow: none; }
+        .btn-type-stock { background-color: var(--btn-cyan); color: #000000; width: 270px; height: 280px; text-shadow: none; }
+        .btn-type-ec { background-color: var(--btn-lime); color: #000000; width: 270px; height: 280px; text-shadow: none; }
 
         .select-section {
             background: #ffffff;
@@ -423,10 +432,78 @@
             padding-left: 12px;
         }
 
+        /* 顧客管理用の大型タイトル領域 */
+        .customer-title-container {
+            text-align: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+        .customer-main-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #000000;
+            margin: 0 0 2px 0;
+            letter-spacing: 2px;
+        }
+        .customer-sub-title {
+            font-size: 22px;
+            color: #333333;
+            margin: 0;
+        }
+        .customer-page-indicator {
+            font-size: 18px;
+            font-weight: bold;
+            color: #78909c;
+            margin-top: 4px;
+        }
+
         .choice-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
+        }
+
+        /* 顧客選択用ブロック：2列コンテナ化して視認性を大幅向上 */
+        .customer-grid-box {
+            background: transparent;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 左右2列に完全分割 */
+            gap: 20px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            min-height: 250px;
+        }
+
+        /* 左右それぞれの列専用ブロック */
+        .customer-column-block {
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .customer-column-block.left-col {
+            background-color: var(--column-yellow-bg);
+        }
+        .customer-column-block.right-col {
+            background-color: var(--column-green-bg);
+        }
+
+        /* エラー・空状態のメッセージ表示用 */
+        .empty-history-msg {
+            grid-column: span 2;
+            font-size: 26px;
+            color: #546e7a;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            line-height: 1.5;
+            background: #ffffff;
+            border-radius: 16px;
         }
 
         .btn-choice {
@@ -447,11 +524,56 @@
             color: #000000;
         }
 
+        /* 顧客カード：指示に合わせた立体UIとホバー・アクティブ時の強化 */
+        .btn-customer-card {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12), 0 5px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* 電話アイコンとの間隔 */
+            height: 56px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .btn-customer-card:hover {
+            background-color: #f5f7f8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12), 0 8px 14px rgba(0, 0, 0, 0.1);
+        }
+        .btn-customer-card:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 電話アイコン用のスタイル */
+        .tel-icon {
+            font-size: 20px;
+            color: #555555;
+        }
+
+        /* フッター制御エリア：顧客欄の下に必ず配置され、絶対に被らない */
         .footer-control {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 20px; 
+            padding: 0 5px;
+            flex-shrink: 0;
+        }
+
+        .pagination-zone {
+            display: flex;
+            gap: 15px;
         }
 
         .btn-nav-back {
@@ -516,7 +638,6 @@
             width: 100%;
         }
 
-        /* 赤丸の要望通りシンプルなテキスト表示に変更 */
         .card-preview {
             font-size: 44px;
             font-weight: bold;
@@ -657,7 +778,7 @@
             box-shadow: 0 5px 0 #b77f28, 0 8px 10px rgba(0,0,0,0.15);
         }
 
-        /* 新設：確認用カスタムポップアップ用のスタイル */
+        /* 確認用カスタムポップアップ用のスタイル */
         .confirm-alert-card {
             width: 600px;
             background-color: #ffffff;
@@ -802,7 +923,7 @@
                     <div class="confirm-body-box">
                         種別：<span id="confirmTypeText">-</span><br>
                         <span id="confirmDateRow">日付：<span id="confirmDateText">-</span><br></span>
-                        部門：<span id="confirmDeptText">-</span>
+                        <span id="confirmDeptLabel">部門：</span><span id="confirmDeptText">-</span>
                     </div>
                     <div class="confirm-buttons-zone">
                         <button class="btn-confirm-no" onclick="handleConfirmNo()">いいえ</button>
@@ -815,7 +936,7 @@
                 <div class="home-layout">
                     <div class="main-menu-grid">
                         <button class="btn-ui btn-in" id="mainInButton" onclick="navigate('viewInTypeSelect')">入れる</button>
-                        <button class="btn-ui btn-out-disabled" id="mainOutButton" onclick="openOutTypeSelectPage()">取る</button>
+                        <button class="btn-ui btn-out-active" id="mainOutButton" onclick="openOutTypeSelectPage()">取る</button>
                     </div>
                     
                     <div class="oricon-storage-panel">
@@ -838,6 +959,7 @@
                 <div class="type-select-grid">
                     <button class="btn-ui btn-type-sale" onclick="handleInType('売出品')">売出品</button>
                     <button class="btn-ui btn-type-stock" onclick="handleInType('ストック品')">ストック品</button>
+                    <button class="btn-ui btn-type-ec" onclick="handleInType('EC品')">EC品</button>
                 </div>
                 <div class="footer-control" style="margin-top: -30px;">
                     <button class="btn-nav-back" onclick="navigate('viewMainMenu')">戻る</button>
@@ -867,6 +989,25 @@
                 </div>
             </div>
 
+            <div class="page" id="viewCustomerSelect">
+                <div class="customer-title-container">
+                    <h1 class="customer-main-title">顧客管理情報</h1>
+                    <p class="customer-sub-title" id="customerSubTitle">氏名＋連絡先下４桁</p>
+                    <div class="customer-page-indicator" id="customerPageIndicator">1 / 3 ページ</div>
+                </div>
+                
+                <div class="customer-grid-box" id="customerGridBox">
+                </div>
+
+                <div class="footer-control">
+                    <button class="btn-nav-back" onclick="goBackFromCustomer()">戻る</button>
+                    <div class="pagination-zone" id="customerPaginationZone">
+                        <button class="btn-nav-nextweek" id="btnPrevCustomer" onclick="changeCustomerPage(-1)">前ページ</button>
+                        <button class="btn-nav-nextweek" id="btnNextCustomer" onclick="changeCustomerPage(1)">次ページ</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="page" id="viewInExecution">
                 <div class="work-banner" id="bannerInText">【3段目】に入れてください</div>
                 <div class="work-split-container">
@@ -878,7 +1019,7 @@
                         <button class="btn-submit-action-next" onclick="completeInAndContinue()">続けて入れる</button>
                         
                         <div class="sub-buttons-row">
-                            <button class="btn-submit-action-back" onclick="navigate('viewInParamSelect')">戻る</button>
+                            <button class="btn-submit-action-back" onclick="handleExecutionBack()">戻る</button>
                             <button class="btn-submit-action-quit" onclick="completeInAndQuit()">作業終了</button>
                         </div>
                     </div>
@@ -896,6 +1037,7 @@
                 <div class="type-select-grid">
                     <button class="btn-ui btn-type-sale" onclick="handleOutType('売出品')">売出品</button>
                     <button class="btn-ui btn-type-stock" onclick="handleOutType('ストック品')">ストック品</button>
+                    <button class="btn-ui btn-type-ec" onclick="handleOutType('EC品')">EC品</button>
                 </div>
                 <div class="footer-control" style="margin-top: -30px;">
                     <button class="btn-nav-back" onclick="navigate('viewMainMenu')">戻る</button>
@@ -939,7 +1081,7 @@
                         <button class="btn-submit-action-next" onclick="completeOutAndContinue()">続けて取り出す</button>
                         
                         <div class="sub-buttons-row">
-                            <button class="btn-submit-action-back" onclick="navigate('viewOutSelect')">戻る</button>
+                            <button class="btn-submit-action-back" onclick="handleExecutionBack()">戻る</button>
                             <button class="btn-submit-action-quit" onclick="completeOutAndQuit()">作業終了</button>
                         </div>
                     </div>
@@ -962,12 +1104,38 @@
     let alertCleared = false;
     let flowInType = '';
     let flowOutType = ''; 
-    let dataInDate = ''; // 決定前は空にするため初期値をクリア
+    let dataInDate = ''; 
     let dataInDept = '';
     let dataOutDate = ''; 
     let dataOutDept = '';
     let isNextWeekActive = false;
-    let currentFlow = ''; // 現在のフローを追跡 ('In' または 'Out')
+    let currentFlow = ''; 
+
+    // 顧客ページネーション用
+    let currentCustomerPage = 1;
+    const customersPerPage = 10;
+    
+    // 五十音ソート済みベースデータ
+    let masterCustomerData = [
+        'アンドウ様ー6042', 'イエダ様ー7134',
+        'イガラシ様ー1598', 'イノウエ様ー2648',
+        'イシイ様ー8321', 'ウエダ様ー9051',
+        'ウスイ様ー4913', 'オオノ様ー7254',
+        'オカモト様ー4387', 'カトウ様ー3176',
+        'カネコ様ー5723', 'クドウ様ー9540',
+        'コバヤシ様ー2839', 'サイトウ様ー5061',
+        'ササキ様ー8712', 'サトウ様ー1425',
+        'シミズ様ー6390', 'スズキ様ー4087',
+        'タカハシ様ー7954', 'タナカ様ー2361',
+        'ナカノ様ー1496', 'ナカムラ様ー9148',
+        'ハセガワ様ー5203', 'ハラダ様ー3679',
+        'フジタ様ー6831', 'マツモト様ー1846',
+        'ムラカミ様ー7025', 'モリ様ー8205',
+        'ヤマダ様ー8410', 'ワタナベ様ー3952'
+    ];
+
+    // CUEBUS内に保管されている顧客（取る対象）
+    let cuebusStoredCustomers = [];
 
     let currentOriconCount = 33;
     const maxOriconCount = 55;
@@ -999,30 +1167,59 @@
         document.getElementById('oriconBar').style.width = percent + '%';
     }
 
+    // 入庫確定（保管）
+    function saveInboundHistory() {
+        if (flowInType === 'EC品' && dataInDept) {
+            if (!cuebusStoredCustomers.includes(dataInDept)) {
+                cuebusStoredCustomers.push(dataInDept);
+                // 五十音を維持してソート
+                cuebusStoredCustomers.sort((a, b) => masterCustomerData.indexOf(a) - masterCustomerData.indexOf(b));
+            }
+        }
+    }
+
+    // 【重要改良】出庫確定（引き渡し）
+    function clearOutboundHistory() {
+        if (flowOutType === 'EC品' && dataOutDept) {
+            // 保管中リストから削除
+            cuebusStoredCustomers = cuebusStoredCustomers.filter(c => c !== dataOutDept);
+            // 【復活させない仕様】マスターデータ（入れる選択肢）からも完全に抹消
+            masterCustomerData = masterCustomerData.filter(c => c !== dataOutDept);
+        }
+    }
+
     function completeInAndContinue() {
+        saveInboundHistory(); 
         currentOriconCount += 1;
         updateOriconDisplay();
-        clearInSelections(); // 選択を初期化して戻す
-        navigate('viewInParamSelect');
+        clearInSelections(); 
+        if (flowInType === 'EC品') {
+            openCustomerPage(1);
+        } else {
+            navigate('viewInParamSelect');
+        }
     }
 
     function completeInAndQuit() {
+        saveInboundHistory(); 
         currentOriconCount += 1;
         updateOriconDisplay();
         resetToHome();
     }
 
     function completeOutAndContinue() {
+        clearOutboundHistory(); 
         currentOriconCount -= 1; 
         updateOriconDisplay();
-        if (flowOutType === 'ストック品') {
-            openOutSelectPage('ストック品');
+        if (flowOutType === 'EC品') {
+            openCustomerPage(1);
         } else {
-            openOutSelectPage('売出品');
+            openOutSelectPage(flowOutType);
         }
     }
 
     function completeOutAndQuit() {
+        clearOutboundHistory(); 
         currentOriconCount -= 1; 
         updateOriconDisplay();
         resetToHome(); 
@@ -1073,23 +1270,28 @@
     function handleInType(type) {
         flowInType = type;
         currentFlow = 'In';
+
+        if (type === 'EC品') {
+            dataInDate = 'EC品';
+            openCustomerPage(1);
+            return;
+        }
+
         const dateWrapper = document.getElementById('inDateWrapper');
         const nextWeekBtn = document.getElementById('btnNextWeek');
-        
-        // ページをまたぐ際に前回の部門選択ハイライトをクリア
         const deptButtons = document.querySelectorAll('#viewInParamSelect .btn-choice');
         deptButtons.forEach(btn => btn.classList.remove('selected'));
 
         if (type === 'ストック品') {
             if (dateWrapper) dateWrapper.style.display = 'none';   
             if (nextWeekBtn) nextWeekBtn.style.display = 'none';   
-            dataInDate = 'ストック品';
+            dataInDate = type;
         } else {
             if (dateWrapper) dateWrapper.style.display = 'block';  
             if (nextWeekBtn) nextWeekBtn.style.display = 'block';  
             isNextWeekActive = false;
             if (nextWeekBtn) nextWeekBtn.classList.remove('active-state');
-            renderInDates(currentWeekDates, 0); // 初期選択は1番目
+            renderInDates(currentWeekDates, 0); 
         }
         navigate('viewInParamSelect');
     }
@@ -1137,8 +1339,6 @@
         clearSelectedInGroup(element);
         element.classList.add('selected');
         dataInDept = val;
-        
-        // 即遷移せず、ポップアップを表示
         showConfirmModal();
     }
 
@@ -1160,6 +1360,13 @@
     function handleOutType(type) {
         flowOutType = type;
         currentFlow = 'Out';
+
+        if (type === 'EC品') {
+            dataOutDate = 'EC品';
+            openCustomerPage(1); 
+            return;
+        }
+
         openOutSelectPage(type);
     }
 
@@ -1168,8 +1375,8 @@
         
         if (type === 'ストック品') {
             if (dateWrapper) dateWrapper.style.display = 'none'; 
-            dataOutDate = 'ストック品';
-            updateOutDepartments('ストック品'); 
+            dataOutDate = type;
+            updateOutDepartments(type); 
         } else {
             if (dateWrapper) dateWrapper.style.display = 'block'; 
             dataOutDate = '6/21(土)'; 
@@ -1191,7 +1398,6 @@
         clearSelectedInGroup(element);
         element.classList.add('selected');
         dataOutDate = val;
-
         updateOutDepartments(val);
     }
 
@@ -1201,7 +1407,6 @@
         deptGrid.innerHTML = '';
 
         let departments = [];
-        let defaultSelectDept = ''; // ユーザー指定により自動選択（ハイライト）を解除
 
         if (dateStr === 'ストック品') {
             departments = ['婦人服', '紳士・子供服', '実用', 'リビング'];
@@ -1234,7 +1439,6 @@
             const btn = document.createElement('button');
             btn.className = 'btn-choice';
             btn.innerText = deptStr;
-
             btn.onclick = function() {
                 selectOutDept(this, deptStr);
             };
@@ -1246,8 +1450,6 @@
         clearSelectedInGroup(element);
         element.classList.add('selected');
         dataOutDept = val;
-
-        // 即遷移せず、ポップアップを表示
         showConfirmModal();
     }
 
@@ -1255,6 +1457,142 @@
         dataOutDept = '';
         const deptButtons = document.querySelectorAll('#outDeptGrid .btn-choice');
         deptButtons.forEach(btn => btn.classList.remove('selected'));
+    }
+
+
+    /* ＝ ＝ ＝ ＝ ＝ 顧客管理画面の制御機能（UI大幅アップデート） ＝ ＝ ＝ ＝ ＝ */
+    function openCustomerPage(pageNumber) {
+        currentCustomerPage = pageNumber;
+        renderCustomerGrid();
+        navigate('viewCustomerSelect');
+    }
+
+    function renderCustomerGrid() {
+        const gridBox = document.getElementById('customerGridBox');
+        const indicator = document.getElementById('customerPageIndicator');
+        const pagination = document.getElementById('customerPaginationZone');
+        const subTitle = document.getElementById('customerSubTitle');
+        if (!gridBox) return;
+
+        gridBox.innerHTML = '';
+
+        let activeData = [];
+        if (currentFlow === 'In') {
+            activeData = masterCustomerData.filter(c => !cuebusStoredCustomers.includes(c));
+            subTitle.innerText = "氏名＋連絡先下４桁 (未保管の一覧)";
+            pagination.style.display = 'flex';
+            indicator.style.display = 'block';
+        } else {
+            activeData = cuebusStoredCustomers; 
+            subTitle.innerText = "CUEBUS内 保管顧客一覧 (引き渡し対象)";
+            pagination.style.display = 'none';
+            indicator.style.display = 'none';
+        }
+
+        if (activeData.length === 0) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'empty-history-msg';
+            if (currentFlow === 'In') {
+                emptyMsg.innerHTML = "すべての顧客データの入庫保管、または引き渡しが完了しました。";
+            } else {
+                emptyMsg.innerHTML = "現在、CUEBUS内に<br>保管されているEC品はありません。";
+            }
+            gridBox.appendChild(emptyMsg);
+            return;
+        }
+
+        let pageCustomers = [];
+        if (currentFlow === 'In') {
+            const startIndex = (currentCustomerPage - 1) * customersPerPage;
+            const endIndex = startIndex + customersPerPage;
+            pageCustomers = activeData.slice(startIndex, endIndex);
+
+            const totalPages = Math.max(1, Math.ceil(activeData.length / customersPerPage));
+            if (currentCustomerPage > totalPages) {
+                currentCustomerPage = totalPages;
+                renderCustomerGrid();
+                return;
+            }
+            indicator.innerText = `${currentCustomerPage} / ${totalPages} ページ`;
+
+            document.getElementById('btnPrevCustomer').disabled = (currentCustomerPage === 1);
+            document.getElementById('btnPrevCustomer').style.opacity = (currentCustomerPage === 1) ? '0.4' : '1';
+            document.getElementById('btnNextCustomer').disabled = (currentCustomerPage === totalPages);
+            document.getElementById('btnNextCustomer').style.opacity = (currentCustomerPage === totalPages) ? '0.4' : '1';
+        } else {
+            pageCustomers = activeData;
+        }
+
+        // 左右2列に分割するための個別ブロックを生成
+        const leftColBlock = document.createElement('div');
+        leftColBlock.className = 'customer-column-block left-col';
+        
+        const rightColBlock = document.createElement('div');
+        rightColBlock.className = 'customer-column-block right-col';
+
+        // 前半5件を左列、後半5件を右列に配置
+        pageCustomers.forEach((customer, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-customer-card';
+            
+            // 指示画像通り、「ー」の手前に受話器アイコンを挿入
+            const formattedText = customer.replace('ー', ' <span class="tel-icon">📞</span>');
+            btn.innerHTML = formattedText;
+            
+            btn.onclick = function() {
+                selectCustomer(customer);
+            };
+            
+            if (index < 5) {
+                leftColBlock.appendChild(btn);
+            } else {
+                rightColBlock.appendChild(btn);
+            }
+        });
+
+        // メインのグリッドボックスに左右ブロックを追加
+        gridBox.appendChild(leftColBlock);
+        gridBox.appendChild(rightColBlock);
+    }
+
+    function changeCustomerPage(direction) {
+        const activeData = masterCustomerData.filter(c => !cuebusStoredCustomers.includes(c));
+        const totalPages = Math.ceil(activeData.length / customersPerPage);
+        let newPage = currentCustomerPage + direction;
+        if (newPage >= 1 && newPage <= totalPages) {
+            currentCustomerPage = newPage;
+            renderCustomerGrid();
+        }
+    }
+
+    function selectCustomer(customerName) {
+        if (currentFlow === 'In') {
+            dataInDept = customerName;
+        } else {
+            dataOutDept = customerName;
+        }
+        showConfirmModal();
+    }
+
+    function goBackFromCustomer() {
+        if (currentFlow === 'In') {
+            navigate('viewInTypeSelect');
+        } else {
+            navigate('viewOutTypeSelect');
+        }
+    }
+
+    function handleExecutionBack() {
+        const typeText = (currentFlow === 'In') ? flowInType : flowOutType;
+        if (typeText === 'EC品') {
+            navigate('viewCustomerSelect');
+        } else {
+            if (currentFlow === 'In') {
+                navigate('viewInParamSelect');
+            } else {
+                navigate('viewOutSelect');
+            }
+        }
     }
 
 
@@ -1269,9 +1607,15 @@
         document.getElementById('confirmDateText').innerText = dateText;
         document.getElementById('confirmDeptText').innerText = deptText;
 
-        // 【修正箇所】「ストック品」が選択された場合、日付行全体を隠す
+        const deptLabel = document.getElementById('confirmDeptLabel');
+        if (typeText === 'EC品') {
+            deptLabel.innerText = '顧客：';
+        } else {
+            deptLabel.innerText = '部門：';
+        }
+
         const dateRow = document.getElementById('confirmDateRow');
-        if (typeText === 'ストック品') {
+        if (typeText === 'ストック品' || typeText === 'EC品') {
             dateRow.style.display = 'none';
         } else {
             dateRow.style.display = 'inline';
@@ -1281,18 +1625,18 @@
     }
 
     function handleConfirmYes() {
-        // ポップアップを閉じる
         document.getElementById('confirmLayer').style.display = 'none';
 
-        if (currentFlow === 'In') {
-            // 入庫実行画面の書き換えと遷移
-            document.getElementById('panelInDate').innerText = dataInDate;
+        const isIn = (currentFlow === 'In');
+        const typeText = isIn ? flowInType : flowOutType;
+
+        if (isIn) {
+            document.getElementById('panelInDate').innerText = (typeText === 'EC品') ? 'EC品' : dataInDate;
             document.getElementById('panelInDept').innerText = dataInDept;
             applyDynamicShelf('In', dataInDate, dataInDept);
             navigate('viewInExecution');
         } else {
-            // 出庫実行画面の書き換えと遷移
-            document.getElementById('panelOutDate').innerText = dataOutDate;
+            document.getElementById('panelOutDate').innerText = (typeText === 'EC品') ? 'EC品' : dataOutDate;
             document.getElementById('panelOutDept').innerText = dataOutDept;
             applyDynamicShelf('Out', dataOutDate, dataOutDept);
             navigate('viewOutExecution');
@@ -1300,10 +1644,7 @@
     }
 
     function handleConfirmNo() {
-        // ポップアップを閉じる
         document.getElementById('confirmLayer').style.display = 'none';
-
-        // 選択状態を完全にリセット
         if (currentFlow === 'In') {
             clearInSelections();
         } else {
